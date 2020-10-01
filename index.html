@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios@0.19.2/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/93a99d4398.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Вернигоров Андрей</title>
+</head>
+<body>
+  <div class="" id="app">
+    <nav>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="nav-wrapper">
+              <div class="nav-logo">
+                <img class="header-avatar" :src="avatar" alt="avatar">
+              </div>
+              <div class="burger-menu">
+                <transition name="slide-fade" mode="out-in">
+                  <i class="fas fa-bars" v-if="!show" @click="show = !show" key="menu"></i>
+                  <i class="fas fa-times" v-else @click="show = !show" key="clear"></i>
+                </transition>
+              </div>
+              <transition name="fade">
+                <div v-if="show" class="nav-items">
+                    <ul  class="nav-list">
+                      <li class="nav-link" v-for="tab in tabs" @click="currentTab = tab.page, type = tab.id, show = !show" :class="{activeMobileMenu: currentTab === tab.page}">{{tab.page}}</li>
+                    </ul>
+                </div>
+              </transition>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid main">
+      <div class="row">
+            <div class="col-md-3">
+                <div class="menu">
+                  <div class="menu-wrapper">
+
+                    <div class="menu-wrapper__avatar">
+                      <img class="avatar" :src="avatar" alt="avatar">
+                    </div>
+
+                    <div class="menu-wrapper__name">
+                      <h5 class="name">{{name + ' ' + surname}}</h5>
+                    </div>
+
+                    <ul class="menu-wrapper__item">
+                      <li v-for="tab in tabs" @click="currentTab = tab.page, type = tab.id" class="item" :class="{activeMenu: currentTab === tab.page}">{{tab.page}}</li>
+                    </ul>
+
+                    <ul class="menu-wrapper__social">
+                      <li v-for="link in links" :class="link.color">
+                        <a :href="link.link">
+                          <i :class="link.icon"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> 
+                </div>
+            </div>
+
+            <div class="col-xl-9 col-lg-12 col-sm-12">
+              
+
+                <div class="content">
+
+                  <template v-if="type === 1" key="page1">
+                    <div class="work-space">
+                      <h1>О себе</h1>
+                      <p>Я веб-разработчик. Самостоятельно освоил разработку сайтов, создал несколько коммерчиских проектов.
+                        Умею работать в команде. Своевременно выполняю работу, ответственно отношусь к решению поставленных задач.
+                        Постоянно совершенствуюсь, слежу за трендами в веб-разработке.
+                        В 2017 году окончил ТТИ ЮФУ по специальности: "Конструирование и технология электронных средств".
+                        С 2015 года работал в Таганрогском научно-исследовательском Институте Связи (инженер-конструктор).
+                        С 2017 года работал в ООО "СБК" (инженер).
+                        Не имею вредных привычек.
+                      </p>
+                    </div>
+                  </template>
+
+                  <template v-else-if="type === 2" key="page2">
+                    <div class="work-space">
+                      <h1>Портфолио</h1>
+                      <div class="work">
+                        <div class="desctop-post">
+
+                          <button
+                          v-for="post in posts"
+                          v-bind:key="post"
+                          v-bind:class="['post-button', { activePost: currentPost === post }]"
+                          v-on:click="currentPost = post"
+                          >
+                            {{ post }}
+                          </button>
+                        
+                          <keep-alive>
+                            <transition name="component-fade" mode="out-in">
+                              <component v-bind:is="currentPostComponent" class="post"></component>
+                            </transition> 
+                          </keep-alive>
+                        </div>
+
+                        <div class="mobile-post">
+
+                          
+
+
+                        </div>
+                  </template>
+
+                  <template v-else-if="type === 3" key="page3">
+                    <div class="work-space">
+                    </div>
+                  </template>
+
+                  <template v-else-if="type === 4" key="page4">
+                    <div class="work-space">
+                      <a href="https://forms.gle/6S5QGpwgcu2HJsSk9">Связаться со мной</a>
+                    </div>
+                  </template>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <script src="js/vue.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
